@@ -1,0 +1,25 @@
+<div class="login-container">
+
+
+    <div class="login-page">
+
+        <div class="form">
+            <form class="login-form">
+                <input type="email"
+                       placeholder="Email"
+                       name="email"
+                       [(ngModel)]="loginRequest.Email"
+                       #Email />
+                <input type="password"
+                       placeholder="Password"
+                       name="password"
+                       [(ngModel)]="loginRequest.Password"
+                       #Password />
+                <button type="submit"
+                        (click)="onLogin()">login</button>
+                <!--<p class="message">Not registered? <a href="#">Create an account</a></p>-->
+            </form>
+        </div>
+    </div>
+
+</div>

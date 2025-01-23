@@ -1,0 +1,62 @@
+@if (spinner) {
+<app-spinner></app-spinner>
+}
+
+<div class="container">
+    <div class="card">
+
+        <div class="card-header text-end">
+            <button routerLink="/user-create"
+                    class="btn btn-primary btn-sm">Add New</button>
+        </div>
+
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm text-center">
+                    <caption>User List</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">S.no</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Password</th>
+                            <th scope="col">Role</th>
+                            <th scope="col"
+                                colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (user of Users; track $index) {
+                        <tr class="">
+
+
+                            <td>{{ $index+ 1 }}</td>
+                            <td>{{ user.Email }}</td>
+                            <td>{{ user.Password }}</td>
+                            <td>{{ user.RoleName }}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm me-2"
+                                        (click)="onEdit(user)">
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-danger btn-sm"
+                                        (click)="onDelete(user)">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
