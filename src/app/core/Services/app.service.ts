@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LoginRequest, User } from '../models/data-models';
+import { LoginRequest, User, Product } from '../models/data-models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,9 @@ export class AppService {
   // Enums start
 
   loadUserRoles() {
-    return this.http.get(this.appUrl + 'Enum/userroles/');
+    return this.http.get(this.appUrl + 'Enum/userroles/', {
+      observe: 'response',
+    });
   }
 
   // Enums end
@@ -53,4 +55,35 @@ export class AppService {
   }
 
   // user end
+
+  // product start
+
+  getProducts() {
+    return this.http.get(this.appUrl + 'Product/', { observe: 'response' });
+  }
+
+  getProductById(id: number) {
+    return this.http.get(this.appUrl + `Product/${id}`, {
+      observe: 'response',
+    });
+  }
+
+  createProduct(Product: Product) {
+    return this.http.post(this.appUrl + 'Product/', Product, {
+      observe: 'response',
+    });
+  }
+
+  updateProduct(id: number, Product: Product) {
+    return this.http.put(this.appUrl + `Product/${id}`, Product, {
+      observe: 'response',
+    });
+  }
+
+  deleteProduct(id: number) {
+    return this.http.delete(this.appUrl + `Product/${id}`, {
+      observe: 'response',
+    });
+  }
+  // product end
 }

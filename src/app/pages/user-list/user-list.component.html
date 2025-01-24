@@ -43,7 +43,9 @@
                                 </button>
 
                                 <button class="btn btn-danger btn-sm"
-                                        (click)="onDelete(user)">
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        (click)="openModal(user)">
                                     Delete
                                 </button>
                             </td>
@@ -59,4 +61,48 @@
 
     </div>
 
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade"
+     id="deleteModal"
+     #deleteModal
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5"
+                    id="staticBackdropLabel">User Deletion</h1>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <h6 class="mb-3">Are you sure you want to delete <span class="text-primary"> "{{ selectedUser.Email
+                        }}"</span> profile?
+                </h6>
+                <p>All information associated to this user profile will be permanently deleted. <span
+                          class="text-danger">
+                        This operation can not be undone.
+                    </span></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary btn-sm"
+                        data-bs-dismiss="modal"
+                        (click)="closeModal()">Cancel</button>
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        data-bs-dismiss="modal"
+                        (click)="onDelete(selectedUser)">Ok</button>
+            </div>
+        </div>
+    </div>
 </div>
