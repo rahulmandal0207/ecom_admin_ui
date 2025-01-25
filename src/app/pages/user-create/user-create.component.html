@@ -2,6 +2,7 @@
 <app-spinner></app-spinner>
 }
 
+
 <!--<div class="container">-->
 <div class="card">
     <h6 class="card-header">Create New User</h6>
@@ -53,18 +54,23 @@
 
 
             <div class="row justify-content-center align-items-center g-2 my-3">
-                <div class="col-1">
-
+                <div class="col-auto">
                     @if(user.UserId != 0) {
-
                     <button type="submit"
-                            class="btn btn-primary"
+                            class="btn btn-primary btn-sm"
                             (click)="updateUser()">Update</button>
                     } @else {
                     <button type="submit"
-                            class="btn btn-primary"
+                            class="btn btn-primary  btn-sm"
                             (click)="createUser()">Add</button>
                     }
+                </div>
+                <div class="col-auto">
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            (click)="resetForm()">
+                        Reset
+                    </button>
                 </div>
             </div>
 

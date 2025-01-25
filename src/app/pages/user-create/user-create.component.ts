@@ -3,8 +3,10 @@ import {
   ElementRef,
   EventEmitter,
   inject,
+  Input,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +16,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
-import { UserListComponent } from '../user-list/user-list.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -35,23 +36,21 @@ export class UserCreateComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   toastr = inject(ToastrService);
 
+  @Input() userContext: User = new User();
   @Output() userCreatedEvent = new EventEmitter<void>();
-
-  constructor() {
-    this.activatedRoute.params.subscribe({
-      next: (res: any) => {
-        this.currentUserId = res.UserId;
-
-        if (this.currentUserId) this.getUser(this.currentUserId);
-      },
-      error: (err) => {
-        alert(err);
-      },
-    });
-  }
 
   ngOnInit(): void {
     this.loadUserRoles();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['userContext'] && changes['userContext'].currentValue) {
+      this.user = { ...changes['userContext'].currentValue }; // Populate the form with user data
+    }
+  }
+
+  resetForm() {
+    this.user = new User();
   }
 
   getUser(userId: number) {
@@ -60,13 +59,13 @@ export class UserCreateComponent implements OnInit {
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
           this.user = res.body.Data;
-          console.log(this.user);
         }
         this.spinner = false;
       },
-      error: (err: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        alert(err);
+        //this.showAlert(err);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });
   }
@@ -79,14 +78,15 @@ export class UserCreateComponent implements OnInit {
         if (res.ok && res.body.Success) {
           console.log('User Created');
           this.toastr.success('User Created', 'Notification');
-
           this.userCreatedEvent.emit();
+          this.resetForm();
         }
         this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        alert('Error' + error.message);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
+        //this.showAlert(error);
       },
     });
   }
@@ -97,14 +97,17 @@ export class UserCreateComponent implements OnInit {
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
           console.log('User Update');
-          //this.router.navigateByUrl('/user-list');
-          new UserListComponent().getUsers();
+          this.toastr.success('User Update', 'Notification');
+          this.userCreatedEvent.emit();
+          this.resetForm();
         }
         this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        alert('Error' + error.message);
+        //alert('Error' + error.message);
+        //this.showAlert(error);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });
   }
@@ -120,9 +123,11 @@ export class UserCreateComponent implements OnInit {
         }
         this.spinner = false;
       },
-      error: (err: HttpErrorResponse) => {
+      error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        alert(err);
+        //alert(err);
+        //this.showAlert(err);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });
   }

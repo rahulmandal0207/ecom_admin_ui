@@ -7,9 +7,12 @@
 
 </app-delete-modal>
 
+
 <div class="container">
 
-    <app-user-create (userCreatedEvent)="getUsers()"></app-user-create>
+    <app-user-create #userCreate
+                     [userContext]="selectedUser"
+                     (userCreatedEvent)="getUsers()"></app-user-create>
 
     <div class="card mt-3">
 

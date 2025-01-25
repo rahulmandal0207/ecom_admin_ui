@@ -65,7 +65,8 @@ export class UserListComponent {
   }
 
   onEdit(user: User) {
-    this.router.navigate(['user-edit', user.UserId]);
+    //this.router.navigate(['user-edit', user.UserId]);
+    this.selectedUser = user;
   }
 
   //  openModal(user: User) {
