@@ -2,13 +2,23 @@
 <app-spinner></app-spinner>
 }
 
-<div class="container">
-    <div class="card">
+<app-delete-modal #deleteModal
+                  (modalResponse)="handleDeleteModal($event)">
 
-        <div class="card-header text-end">
+</app-delete-modal>
+
+<div class="container">
+
+    <app-user-create (userCreatedEvent)="getUsers()"></app-user-create>
+
+    <div class="card mt-3">
+
+        <!--<div class="card-header text-end">
             <button routerLink="/user-create"
                     class="btn btn-primary btn-sm">Add New</button>
-        </div>
+         </div>-->
+
+        <h6 class="card-header">List of Users</h6>
 
 
         <div class="card-body">
@@ -45,7 +55,7 @@
                                 <button class="btn btn-danger btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
-                                        (click)="openModal(user)">
+                                        (click)="showDeleteModal(user)">
                                     Delete
                                 </button>
                             </td>
@@ -61,48 +71,4 @@
 
     </div>
 
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade"
-     id="deleteModal"
-     #deleteModal
-     data-bs-backdrop="static"
-     data-bs-keyboard="false"
-     tabindex="-1"
-     aria-labelledby="staticBackdropLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5"
-                    id="staticBackdropLabel">User Deletion</h1>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        (click)="closeModal()"></button>
-            </div>
-            <div class="modal-body">
-                <h6 class="mb-3">Are you sure you want to delete <span class="text-primary"> "{{ selectedUser.Email
-                        }}"</span> profile?
-                </h6>
-                <p>All information associated to this user profile will be permanently deleted. <span
-                          class="text-danger">
-                        This operation can not be undone.
-                    </span></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button"
-                        class="btn btn-secondary btn-sm"
-                        data-bs-dismiss="modal"
-                        (click)="closeModal()">Cancel</button>
-                <button type="button"
-                        class="btn btn-danger btn-sm"
-                        data-bs-dismiss="modal"
-                        (click)="onDelete(selectedUser)">Ok</button>
-            </div>
-        </div>
-    </div>
 </div>

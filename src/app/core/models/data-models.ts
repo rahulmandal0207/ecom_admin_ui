@@ -9,6 +9,7 @@ export class User {
   Password: string | null = null;
   Role: number | null = null;
   RoleName: string | null = null;
+  Orders: Array<Order> | null = null;
 }
 
 export class Product {
@@ -17,3 +18,5 @@ export class Product {
   CurrentPrice: number | null = null;
   StockQuantity: number | null = 1;
 }
+
+export class Order {}

@@ -1,8 +1,10 @@
 import {
   Component,
   ElementRef,
+  EventEmitter,
   inject,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -12,6 +14,8 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { UserListComponent } from '../user-list/user-list.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-create',
@@ -29,7 +33,9 @@ export class UserCreateComponent implements OnInit {
   router = inject(Router);
   currentUserId: number = 0;
   activatedRoute = inject(ActivatedRoute);
+  toastr = inject(ToastrService);
 
+  @Output() userCreatedEvent = new EventEmitter<void>();
 
   constructor() {
     this.activatedRoute.params.subscribe({
@@ -72,7 +78,9 @@ export class UserCreateComponent implements OnInit {
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
           console.log('User Created');
-          this.router.navigateByUrl('/user-list');
+          this.toastr.success('User Created', 'Notification');
+
+          this.userCreatedEvent.emit();
         }
         this.spinner = false;
       },
@@ -89,7 +97,8 @@ export class UserCreateComponent implements OnInit {
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
           console.log('User Update');
-          this.router.navigateByUrl('/user-list');
+          //this.router.navigateByUrl('/user-list');
+          new UserListComponent().getUsers();
         }
         this.spinner = false;
       },
@@ -117,6 +126,4 @@ export class UserCreateComponent implements OnInit {
       },
     });
   }
-
- 
 }

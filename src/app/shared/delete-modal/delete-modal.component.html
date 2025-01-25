@@ -1,0 +1,41 @@
+<!-- Modal -->
+<div class="modal fade"
+     id="deleteModal"
+     #deleteModal
+     data-bs-backdrop="static"
+     data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5"
+                    id="staticBackdropLabel">{{title}}</h1>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--<h6 class="mb-3">Are you sure you want to delete <span class="text-primary"> "Jon Doe"</span> profile?
+                </h6>
+                <p>All information associated to this user profile will be permanently deleted. <span
+                          class="text-danger">
+                        This operation can not be undone.
+                    </span></p>-->
+                {{message}}
+            </div>
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-secondary btn-sm"
+                        data-bs-dismiss="modal"
+                        (click)="close(false)">Cancel</button>
+                <button type="button"
+                        class="btn btn-danger btn-sm"
+                        data-bs-dismiss="modal"
+                        (click)="close(true)">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>

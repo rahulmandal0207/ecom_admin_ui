@@ -2,74 +2,74 @@
 <app-spinner></app-spinner>
 }
 
-<div class="container">
-    <div class="card">
-        <h6 class="card-header">Create New User</h6>
+<!--<div class="container">-->
+<div class="card">
+    <h6 class="card-header">Create New User</h6>
 
-        <div class="card-body">
-            <form class="form">
-                <div class="row justify-content-center align-items-center g-2">
-                    <div class="col-3 mx-2">
+    <div class="card-body">
+        <form class="form">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-3 mx-2">
 
-                        <label for="email"
-                               class="form-label">Email</label>
+                    <label for="email"
+                           class="form-label">Email</label>
 
-                        <input type="text"
-                               class="form-control form-control-sm"
-                               id="email"
-                               name="email"
-                               [(ngModel)]="user.Email"
-                               required />
-                    </div>
-
-                    <div class="col-3 mx-2">
-                        <label for="password"
-                               class="form-label">Password</label>
-
-                        <input type="password"
-                               class="form-control form-control-sm"
-                               id="password"
-                               name="password"
-                               [(ngModel)]="user.Password"
-                               required />
-                    </div>
-
-                    <div class="col-3 mx-2">
-                        <label for="role"
-                               class="form-label">Role</label>
-
-                        <select class="form-select form-select-sm"
-                                name="role"
-                                [(ngModel)]="user.Role"
-                                id="role">
-
-                            @for(userRole of userRoles; track $index) {
-                            <option [value]="userRole.Key">{{userRole.Value}}</option>
-                            }
-                        </select>
-
-                    </div>
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           id="email"
+                           name="email"
+                           [(ngModel)]="user.Email"
+                           required />
                 </div>
 
+                <div class="col-3 mx-2">
+                    <label for="password"
+                           class="form-label">Password</label>
 
-                <div class="row justify-content-center align-items-center g-2 my-3">
-                    <div class="col-1">
+                    <input type="password"
+                           class="form-control form-control-sm"
+                           id="password"
+                           name="password"
+                           [(ngModel)]="user.Password"
+                           required />
+                </div>
 
-                        @if(user.UserId != 0) {
+                <div class="col-3 mx-2">
+                    <label for="role"
+                           class="form-label">Role</label>
 
-                        <button type="submit"
-                                class="btn btn-primary"
-                                (click)="updateUser()">Update</button>
-                        } @else {
-                        <button type="submit"
-                                class="btn btn-primary"
-                                (click)="createUser()">Add</button>
+                    <select class="form-select form-select-sm"
+                            name="role"
+                            [(ngModel)]="user.Role"
+                            id="role">
+
+                        @for(userRole of userRoles; track $index) {
+                        <option [value]="userRole.Key">{{userRole.Value}}</option>
                         }
-                    </div>
+                    </select>
+
                 </div>
+            </div>
 
 
-            </form>
-        </div>
+            <div class="row justify-content-center align-items-center g-2 my-3">
+                <div class="col-1">
+
+                    @if(user.UserId != 0) {
+
+                    <button type="submit"
+                            class="btn btn-primary"
+                            (click)="updateUser()">Update</button>
+                    } @else {
+                    <button type="submit"
+                            class="btn btn-primary"
+                            (click)="createUser()">Add</button>
+                    }
+                </div>
+            </div>
+
+
+        </form>
     </div>
 </div>
+<!--</div>-->

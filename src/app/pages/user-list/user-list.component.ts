@@ -4,22 +4,26 @@ import { AppService } from '../../core/Services/app.service';
 import { User } from '../../core/models/data-models';
 import { Router, RouterLink } from '@angular/router';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
+import { DeleteModalComponent } from '../../shared/delete-modal/delete-modal.component';
+import { UserCreateComponent } from '../user-create/user-create.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [RouterLink, SpinnerComponent],
+  imports: [SpinnerComponent, DeleteModalComponent, UserCreateComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css',
 })
 export class UserListComponent {
-  router = inject(Router);
-  service = inject(AppService);
   Users: User[] = [];
   spinner: boolean = false;
   selectedUser: User = new User();
+  @ViewChild('deleteModal') deleteModal!: DeleteModalComponent;
 
-  @ViewChild('deleteModal') deleteModal?: ElementRef | undefined;
+  router = inject(Router);
+  service = inject(AppService);
+  toastr = inject(ToastrService);
 
   ngOnInit(): void {
     this.getUsers();
@@ -50,6 +54,7 @@ export class UserListComponent {
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
           console.log('User Deleted');
+          this.toastr.warning('User Removed', 'Notification');
           this.getUsers();
         }
       },
@@ -57,30 +62,43 @@ export class UserListComponent {
         alert(error.message);
       },
     });
-    this.closeModal();
   }
 
   onEdit(user: User) {
     this.router.navigate(['user-edit', user.UserId]);
   }
 
-  openModal(user: User) {
+  //  openModal(user: User) {
+  //    if (this.deleteModal) {
+  //      const modalElement = this.deleteModal.nativeElement;
+  //      modalElement.classList.add('show');
+  //      modalElement.style.display = 'block';
+  //      document.body.classList.add('modal-open');
+  //    }
+  //  }
+  //
+  //  closeModal() {
+  //    if (this.deleteModal) {
+  //      const modalElement = this.deleteModal.nativeElement;
+  //      modalElement.classList.remove('show');
+  //      modalElement.style.display = 'none';
+  //      document.body.classList.remove('modal-open');
+  //    }
+  //  }
+
+  showDeleteModal(user: User) {
+    debugger;
     this.selectedUser = user;
-    if (this.deleteModal) {
-      const modalElement = this.deleteModal.nativeElement;
-      modalElement.classList.add('show');
-      modalElement.style.display = 'block';
-      document.body.classList.add('modal-open');
-    }
+    this.deleteModal.context = user;
+    this.deleteModal.show();
   }
 
-  closeModal() {
-    this.selectedUser = new User();
-    if (this.deleteModal) {
-      const modalElement = this.deleteModal.nativeElement;
-      modalElement.classList.remove('show');
-      modalElement.style.display = 'none';
-      document.body.classList.remove('modal-open');
+  handleDeleteModal(res: { action: boolean; context: User }) {
+    if (res.action) {
+      this.onDelete(res.context);
+    } else {
+      console.log('Failed' + res.action);
     }
+    this.selectedUser = new User();
   }
 }
