@@ -65,27 +65,8 @@ export class UserListComponent {
   }
 
   onEdit(user: User) {
-    //this.router.navigate(['user-edit', user.UserId]);
     this.selectedUser = user;
   }
-
-  //  openModal(user: User) {
-  //    if (this.deleteModal) {
-  //      const modalElement = this.deleteModal.nativeElement;
-  //      modalElement.classList.add('show');
-  //      modalElement.style.display = 'block';
-  //      document.body.classList.add('modal-open');
-  //    }
-  //  }
-  //
-  //  closeModal() {
-  //    if (this.deleteModal) {
-  //      const modalElement = this.deleteModal.nativeElement;
-  //      modalElement.classList.remove('show');
-  //      modalElement.style.display = 'none';
-  //      document.body.classList.remove('modal-open');
-  //    }
-  //  }
 
   showDeleteModal(user: User) {
     debugger;

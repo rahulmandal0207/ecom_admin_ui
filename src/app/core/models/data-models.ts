@@ -13,10 +13,11 @@ export class User {
 }
 
 export class Product {
-  PrductId: number = 0;
+  ProductId: number = 0;
   ProductName: string | null = null;
   CurrentPrice: number | null = null;
   StockQuantity: number | null = 1;
+  ProductImageUrl?: string | null = null;
 }
 
 export class Order {}

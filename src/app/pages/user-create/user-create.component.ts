@@ -64,7 +64,6 @@ export class UserCreateComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        //this.showAlert(err);
         this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });
@@ -86,7 +85,6 @@ export class UserCreateComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
         this.toastr.error(error.error.title, 'Error: ' + error.error.status);
-        //this.showAlert(error);
       },
     });
   }
@@ -105,8 +103,7 @@ export class UserCreateComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        //alert('Error' + error.message);
-        //this.showAlert(error);
+
         this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });
@@ -125,8 +122,7 @@ export class UserCreateComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         this.spinner = false;
-        //alert(err);
-        //this.showAlert(err);
+
         this.toastr.error(error.error.title, 'Error: ' + error.error.status);
       },
     });

@@ -1,0 +1,76 @@
+@if (spinner) {
+<app-spinner></app-spinner>
+}
+
+<app-delete-modal #deleteModal
+                  (modalResponse)="handleDeleteModal($event)">
+
+</app-delete-modal>
+
+
+<div class="container">
+
+    <app-product-create #userCreate
+                        [ProductContext]="selectedProduct"
+                        (ProductCreatedEvent)="getProducts()"></app-product-create>
+
+    <div class="card mt-3">
+
+        <!--<div class="card-header text-end">
+                <button routerLink="/user-create"
+                        class="btn btn-primary btn-sm">Add New</button>
+             </div>-->
+
+        <h6 class="card-header">List of Products</h6>
+
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm text-center">
+                    <caption>Product List</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">S.no</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Current Price</th>
+                            <th scope="col">Stock Quantity</th>
+                            <th scope="col"
+                                colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (product of Products; track $index) {
+                        <tr class="">
+
+                            <td>{{ $index+ 1 }}</td>
+                            <td>{{ product.ProductName }}</td>
+                            <td>{{ product.CurrentPrice | currency:"INR" }}</td>
+                            <td>{{ product.StockQuantity }}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm me-2"
+                                        (click)="onEdit(product)">
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        (click)="showDeleteModal(product)">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -24,7 +24,7 @@ export class DeleteModalComponent {
 
   @Output() modalResponse = new EventEmitter<{
     action: boolean;
-    context: User;
+    context: any;
   }>();
 
   show() {

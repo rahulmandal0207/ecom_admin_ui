@@ -1,0 +1,77 @@
+@if (spinner) {
+<app-spinner></app-spinner>
+}
+
+
+<!--<div class="container">-->
+<div class="card">
+    <h6 class="card-header">Create New Product</h6>
+
+    <div class="card-body">
+        <form class="form">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-3 mx-2">
+
+                    <label for="productName"
+                           class="form-label">Product Name</label>
+
+                    <input type="text"
+                           class="form-control form-control-sm"
+                           id="productName"
+                           name="productName"
+                           [(ngModel)]="Product.ProductName"
+                           required />
+                </div>
+
+                <div class="col-3 mx-2">
+                    <label for="currentPrice"
+                           class="form-label">Current Price</label>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           id="currentPrice"
+                           name="currentPrice"
+                           [(ngModel)]="Product.CurrentPrice"
+                           required />
+                </div>
+                <div class="col-3 mx-2">
+                    <label for="stockQuantity"
+                           class="form-label">Stock Quantity</label>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           id="stockQuantity"
+                           name="stockQuantity"
+                           [(ngModel)]="Product.StockQuantity"
+                           required />
+                </div>
+
+            </div>
+
+
+            <div class="row justify-content-center align-items-center g-2 my-3">
+                <div class="col-auto">
+                    @if(Product.ProductId != 0) {
+                    <button type="submit"
+                            class="btn btn-primary btn-sm"
+                            (click)="updateProduct()">Update</button>
+                    } @else {
+                    <button type="submit"
+                            class="btn btn-primary  btn-sm"
+                            (click)="createProduct()">Add</button>
+                    }
+                </div>
+                <div class="col-auto">
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            (click)="resetForm()">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<!--</div>-->
