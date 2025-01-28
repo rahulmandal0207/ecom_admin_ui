@@ -30,26 +30,31 @@ export class UserListComponent {
   }
 
   newUser() {
-    this.router.navigateByUrl('user-create');
+    this.spinner = true;
+    this.router.navigateByUrl('user-create').finally(() => {
+      this.spinner = false;
+    });
   }
 
   getUsers() {
+    debugger;
     this.spinner = true;
     this.service.getUsers().subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
-          this.Users = res.body.Data.$values;
+          this.Users = res.body.Data;
         }
         this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
-        alert('Error while getting users');
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
         this.spinner = false;
       },
     });
   }
 
   onDelete(user: User) {
+    this.spinner = true;
     this.service.deleteUser(user.UserId).subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
@@ -57,9 +62,11 @@ export class UserListComponent {
           this.toastr.warning('User Removed', 'Notification');
           this.getUsers();
         }
+        this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
+        this.spinner = false;
       },
     });
   }

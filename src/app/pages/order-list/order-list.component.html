@@ -1,0 +1,94 @@
+@if (spinner) {
+<app-spinner></app-spinner>
+}
+
+<app-delete-modal #deleteModal
+                  (modalResponse)="handleDeleteModal($event)">
+
+</app-delete-modal>
+
+
+<div class="container">
+
+    <app-order-create #orderCreate
+                      [OrderContext]="selectedOrder"
+                      (userCreatedEvent)="getOrders()"></app-order-create>
+
+    <div class="card mt-3">
+
+        <!--<div class="card-header text-end">
+                <button routerLink="/user-create"
+                        class="btn btn-primary btn-sm">Add New</button>
+             </div>-->
+
+        <h6 class="card-header">List of Orders</h6>
+
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-sm text-center">
+                    <caption>Order List</caption>
+                    <!--<thead>
+                        <tr>
+                            <th scope="col">S.no</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Total Amount</th>
+                            <th scope="col"
+                                colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+   
+                        <tr *ngFor="let order of Orders">
+
+              
+                            <td>{{ order.OrderDetails }}</td>
+                            <td>{{ order.OrderStatusName }}</td>
+                            <td>{{ order.OrderDate | date}}</td>
+                            <td>{{ order.TotalAmount | currency:"INR"}} </td>
+                            <td>
+                                <button class="btn btn-warning btn-sm me-2"
+                                        (click)="onEdit(order)">
+                                    Edit
+                                </button>
+
+                                <button class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        (click)="showDeleteModal(order)">
+                                    Delete
+                                </button>
+                            </td>
+
+                        </tr>
+                       
+
+                    </tbody>-->
+
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Total Amount</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

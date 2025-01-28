@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { LoginRequest, User, Product } from '../models/data-models';
+import { LoginRequest, User, Product, Order } from '../models/data-models';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,11 @@ export class AppService {
 
   loadUserRoles() {
     return this.http.get(this.appUrl + 'Enum/userroles/', {
+      observe: 'response',
+    });
+  }
+  loadOrderStatus() {
+    return this.http.get(this.appUrl + 'Enum/orderstatuses/', {
       observe: 'response',
     });
   }
@@ -86,4 +91,36 @@ export class AppService {
     });
   }
   // product end
+
+  // order start
+
+  getOrders() {
+    return this.http.get(this.appUrl + 'Order/', { observe: 'response' });
+  }
+
+  getOrderById(id: number) {
+    return this.http.get(this.appUrl + `Order/${id}`, {
+      observe: 'response',
+    });
+  }
+
+  createOrder(Order: Order) {
+    return this.http.post(this.appUrl + 'Order/', Order, {
+      observe: 'response',
+    });
+  }
+
+  updateOrder(id: number, Order: Order) {
+    return this.http.put(this.appUrl + `Order/${id}`, Order, {
+      observe: 'response',
+    });
+  }
+
+  deleteOrder(id: number) {
+    return this.http.delete(this.appUrl + `Order/${id}`, {
+      observe: 'response',
+    });
+  }
+
+  // order end
 }

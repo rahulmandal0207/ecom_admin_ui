@@ -20,4 +20,21 @@ export class Product {
   ProductImageUrl?: string | null = null;
 }
 
-export class Order {}
+export class Order {
+  OrderId: number = 0;
+  UserId: number | null = null;
+  OrderDate: Date = new Date();
+  TotalAmount: number | null = null;
+  OrderStatus: number | null = null;
+  OrderStatusName: string | null = null;
+  OrderDetails: OrderDetail[] = [];
+}
+
+export class OrderDetail {
+  OrderDetailId: number = 0;
+  OrderId: number | null = null;
+  ProductId: number | null = null;
+  Quantity: number = 1;
+  Price: number = 0.0;
+  ProductName: string | null = null;
+}

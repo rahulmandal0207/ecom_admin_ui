@@ -1,0 +1,86 @@
+@if (spinner) {
+<app-spinner></app-spinner>
+}
+
+
+<!--<div class="container">-->
+<div class="card">
+    <h6 class="card-header">Create New Order</h6>
+
+    <div class="card-body">
+        <form class="form">
+            <div class="row justify-content-center align-items-center g-2">
+              
+
+                <div class="col-3 mx-2">
+                    <label for="ProductName"
+                           class="form-label">Product</label>
+
+                    <select class="form-select form-select-sm"
+                            name="ProductName"
+                            [(ngModel)]="OrderDetails.ProductId"
+                            id="ProductName">
+
+                        @for(product of Products; track $index) {
+                        <option [value]="product.ProductId">{{product.ProductName}}</option>
+                        }
+                    </select>
+
+                </div>
+                <div class="col-3 mx-2">
+                    <label for="quantity"
+                           class="form-label">Quantity</label>
+
+                    <input type="number"
+                           class="form-control form-control-sm"
+                           id="quantity"
+                           name="quantity"
+                           [(ngModel)]="OrderDetails.Quantity"
+                           required />
+                </div>
+
+
+                <!--<div class="col-3 mx-2">
+                    <label for="role"
+                           class="form-label">Role</label>
+
+                    <select class="form-select form-select-sm"
+                            name="role"
+                            [(ngModel)]="Order.Role"
+                            id="role">
+
+                        @for(orderStatus of OrderStatus; track $index) {
+                        <option [value]="orderStatus.Key">{{orderStatus.Value}}</option>
+                        }
+                    </select>
+
+                </div>-->
+            </div>
+
+
+            <div class="row justify-content-center align-items-center g-2 my-3">
+                <div class="col-auto">
+                    @if(Order.OrderId != 0) {
+                    <button type="submit"
+                            class="btn btn-primary btn-sm"
+                            (click)="updateOrder()">Update</button>
+                    } @else {
+                    <button type="submit"
+                            class="btn btn-primary  btn-sm"
+                            (click)="createOrder()">Add</button>
+                    }
+                </div>
+                <div class="col-auto">
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm"
+                            (click)="resetForm()">
+                        Reset
+                    </button>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<!--</div>-->

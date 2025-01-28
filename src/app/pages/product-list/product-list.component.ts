@@ -36,7 +36,10 @@ export class ProductListComponent {
   }
 
   newProduct() {
-    this.router.navigateByUrl('product-create');
+    this.spinner = true;
+    this.router.navigateByUrl('product-create').finally(() => {
+      this.spinner = false;
+    });
   }
 
   getProducts() {
@@ -50,13 +53,15 @@ export class ProductListComponent {
         this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
-        alert('Error while getting Products');
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
+
         this.spinner = false;
       },
     });
   }
 
   onDelete(Product: Product) {
+    this.spinner = true;
     this.service.deleteProduct(Product.ProductId).subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
@@ -64,30 +69,41 @@ export class ProductListComponent {
           this.toastr.warning('Product Removed', 'Notification');
           this.getProducts();
         }
+        this.spinner = false;
       },
       error: (error: HttpErrorResponse) => {
-        alert(error.message);
+        this.toastr.error(error.error.title, 'Error: ' + error.error.status);
+        this.spinner = false;
       },
     });
   }
 
   onEdit(Product: Product) {
+    this.spinner = true;
     this.selectedProduct = Product;
+    // Simulate async operation
+    setTimeout(() => {
+      this.spinner = false;
+    }, 500);
   }
 
   showDeleteModal(Product: Product) {
+    this.spinner = true;
     debugger;
     this.selectedProduct = Product;
     this.deleteModal.context = Product;
     this.deleteModal.show();
+    this.spinner = false;
   }
 
   handleDeleteModal(res: { action: boolean; context: Product }) {
+    this.spinner = true;
     if (res.action) {
       this.onDelete(res.context);
     } else {
       console.log('Failed' + res.action);
     }
     this.selectedProduct = new Product();
+    this.spinner = false;
   }
 }

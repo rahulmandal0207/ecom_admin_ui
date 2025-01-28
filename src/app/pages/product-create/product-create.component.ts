@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+
 import { Product } from '../../core/models/data-models';
 import { AppService } from '../../core/Services/app.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -23,7 +24,6 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductCreateComponent {
   Product: Product = new Product();
-
   spinner: boolean = false;
 
   service = inject(AppService);
