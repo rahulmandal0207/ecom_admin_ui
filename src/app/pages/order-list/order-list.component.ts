@@ -40,7 +40,7 @@ export class OrderListComponent {
   }
 
   getOrders() {
-    debugger;
+    //debugger;
     this.spinner = true;
     this.service.getOrders().subscribe({
       next: (res: HttpResponse<any>) => {
@@ -73,6 +73,7 @@ export class OrderListComponent {
   }
 
   onEdit(Order: Order) {
+    debugger;
     this.selectedOrder = Order;
   }
 
