@@ -9,23 +9,39 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { User } from '../../core/models/data-models';
 import { AppService } from '../../core/Services/app.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, formatCurrency } from '@angular/common';
 import { SpinnerComponent } from '../../shared/spinner/spinner.component';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [FormsModule, CommonModule, SpinnerComponent],
+  imports: [FormsModule, CommonModule, SpinnerComponent, ReactiveFormsModule],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.css',
 })
 export class UserCreateComponent implements OnInit {
+  userForm: FormGroup = new FormGroup({
+    UserId: new FormControl(0),
+    Email: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    Password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
+    Role: new FormControl(null, [Validators.required]),
+  });
+
   user: User = new User();
   userRoles: any = [];
   spinner: boolean = false;
@@ -45,12 +61,22 @@ export class UserCreateComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['userContext'] && changes['userContext'].currentValue) {
-      this.user = { ...changes['userContext'].currentValue }; // Populate the form with user data
+      this.populateForm(changes['userContext'].currentValue); // Populate the form with user data
     }
+  }
+
+  populateForm(userData: any) {
+    this.userForm.patchValue({
+      UserId: userData.UserId,
+      Email: userData.Email,
+      Password: userData.Password,
+      Role: userData.Role,
+    });
   }
 
   resetForm() {
     this.user = new User();
+    this.userForm.reset();
   }
 
   getUser(userId: number) {
@@ -72,6 +98,7 @@ export class UserCreateComponent implements OnInit {
   createUser() {
     debugger;
     this.spinner = true;
+    this.user = this.userForm.value;
     this.service.createUser(this.user).subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
@@ -91,6 +118,7 @@ export class UserCreateComponent implements OnInit {
 
   updateUser() {
     this.spinner = true;
+    this.user = this.userForm.value;
     this.service.updateUser(this.user.UserId, this.user).subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.ok && res.body.Success) {
@@ -110,12 +138,12 @@ export class UserCreateComponent implements OnInit {
   }
 
   loadUserRoles() {
-    //debugger;
+    debugger;
     this.spinner = true;
     this.service.loadUserRoles().subscribe({
       next: (res: HttpResponse<any>) => {
         if (res.body.Success) {
-          this.userRoles = res.body.Data.$values;
+          this.userRoles = res.body.Data;
           console.log(this.userRoles);
         }
         this.spinner = false;

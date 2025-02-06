@@ -8,7 +8,9 @@
     <h6 class="card-header">Create New User</h6>
 
     <div class="card-body">
-        <form class="form">
+        <form class="form"
+              [formGroup]="userForm"
+              (ngSubmit)="createUser()">
             <div class="row justify-content-center align-items-center g-2">
                 <div class="col-3 mx-2">
 
@@ -19,7 +21,7 @@
                            class="form-control form-control-sm"
                            id="email"
                            name="email"
-                           [(ngModel)]="user.Email"
+                           formControlName="Email"
                            required />
                 </div>
 
@@ -31,7 +33,7 @@
                            class="form-control form-control-sm"
                            id="password"
                            name="password"
-                           [(ngModel)]="user.Password"
+                           formControlName="Password"
                            required />
                 </div>
 
@@ -41,11 +43,13 @@
 
                     <select class="form-select form-select-sm"
                             name="role"
-                            [(ngModel)]="user.Role"
+                            formControlName="Role"
                             id="role">
-
+                        <option>--select role--</option>
                         @for(userRole of userRoles; track $index) {
                         <option [value]="userRole.Key">{{userRole.Value}}</option>
+                        } @empty {
+                        <option>No Roles</option>
                         }
                     </select>
 
@@ -55,14 +59,13 @@
 
             <div class="row justify-content-center align-items-center g-2 my-3">
                 <div class="col-auto">
-                    @if(user.UserId != 0) {
+                    @if(userForm.get('UserId')!.value != 0) {
                     <button type="submit"
                             class="btn btn-primary btn-sm"
                             (click)="updateUser()">Update</button>
                     } @else {
                     <button type="submit"
-                            class="btn btn-primary  btn-sm"
-                            (click)="createUser()">Add</button>
+                            class="btn btn-primary  btn-sm">Add</button>
                     }
                 </div>
                 <div class="col-auto">
